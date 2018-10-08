@@ -1,0 +1,84 @@
+{% set name = "pdal" %}
+{% set version = "1.7.2" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  fn: {{ name }}-{{ version }}.tar.gz
+  url: https://github.com/PDAL/PDAL/archive/{{ version }}.tar.gz
+  sha256: cedfefbe54ca61cbb33d100d619c53873d84f480ff53deec2cf6dd91580f6a61
+  patches:
+    - geos.patch
+    - hdf5.patch
+
+build:
+    number: 0
+
+requirements:
+  build:
+    - {{ compiler("c") }}
+    - {{ compiler("cxx") }}
+    - cmake
+    - ninja
+    - python
+    - numpy
+  host:
+    - python
+    - numpy
+    - libgdal
+    - geos
+    - geotiff
+    # - postgresql 10.3.*
+    - jsoncpp
+    - eigen
+    - sqlite
+    # - laz-perf 1.2.*
+    - nitro
+    - hexer
+    - laszip
+    - curl
+    - zlib
+    - pcl
+    - hdf5
+    - boost
+    - vtk
+    - tbb-devel
+  run:
+    - python
+    - {{ pin_compatible('numpy') }}
+    - {{ pin_compatible('jsoncpp', max_pin='x.x.x') }}
+    # - {{ pin_compatible('postgresql', max_pin='x.x') }}
+    # - {{ pin_compatible('laz-perf', max_pin='x.x') }}
+    - {{ pin_compatible('nitro', max_pin='x.x') }}
+    - {{ pin_compatible('hexer', max_pin='x.x') }}
+    - {{ pin_compatible('laszip', max_pin='x.x') }}
+    - {{ pin_compatible('pcl', max_pin='x.x') }}
+    - {{ pin_compatible('hdf5', max_pin='x.x.x') }}
+    - libgdal
+    - geos
+    - geotiff
+    - curl
+    - zlib
+    - boost
+    - vtk
+    - tbb-devel
+
+test:
+  commands:
+    - pdal --version
+    - pdal --drivers
+
+about:
+  home: https://www.pdal.io
+  license: BSD 3-Clause
+  summary: 'Point Data Abstraction Library (PDAL)'
+  description: |
+    Point cloud data processing.
+  doc_url: https://www.pdal.io
+  dev_url: https://github.com/pdal/pdal
+
+extra:
+  recipe-maintainers:
+    - v-turin
