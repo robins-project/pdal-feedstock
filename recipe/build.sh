@@ -2,13 +2,13 @@
 
 mkdir build && cd build
 
-export LDFLAGS="$LDFLAGS -Wl,-rpath-link,$PREFIX/lib"
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PREFIX/lib/pkgconfig
+export LDFLAGS="$LDFLAGS -fuse-ld=gold"
 
 cmake -G "Ninja" \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=$PREFIX \
-  -DCMAKE_LIBRARY_PATH=$PREFIX/lib \
-  -DCMAKE_INCLUDE_PATH=$PREFIX/include \
+  -DCMAKE_PREFIX_PATH=$PREFIX \
   -DBUILD_PLUGIN_GREYHOUND=ON \
   -DBUILD_PLUGIN_PCL=ON \
   -DBUILD_PLUGIN_PYTHON=ON \
@@ -21,9 +21,8 @@ cmake -G "Ninja" \
   -DWITH_TESTS=OFF \
   -DWITH_ZLIB=ON \
   -DWITH_LASZIP=ON \
+  -DWITH_VTK:BOOL=ON \
   ..
-
-  # -DWITH_LAZPERF=ON \
 
 ninja install
 

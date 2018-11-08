@@ -1,5 +1,5 @@
 {% set name = "pdal" %}
-{% set version = "1.7.2" %}
+{% set version = "1.8.0" %}
 
 package:
   name: {{ name }}
@@ -8,10 +8,11 @@ package:
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://github.com/PDAL/PDAL/archive/{{ version }}.tar.gz
-  sha256: cedfefbe54ca61cbb33d100d619c53873d84f480ff53deec2cf6dd91580f6a61
+  sha256: ef3a32c06865383feac46fd7eb7491f034cad6b0b246b3c917271ae0c8f25b69
   patches:
-    - geos.patch
+    # - geos.patch
     - hdf5.patch
+    # - cchar.patch
 
 build:
     number: 0
@@ -24,26 +25,27 @@ requirements:
     - ninja
     - python
     - numpy
+    - pkg-config
   host:
     - python
     - numpy
-    - libgdal
+    - libgdal {{ libgdal }}
     - geos
-    - geotiff
+    - geotiff {{ geotiff }}
     # - postgresql 10.3.*
     - jsoncpp
-    - eigen
+    - eigen {{ eigen }}
     - sqlite
     # - laz-perf 1.2.*
-    - nitro
-    - hexer
-    - laszip
+    - nitro {{ nitro }}
+    - hexer {{ hexer }}
+    - laszip {{ laszip }}
     - curl
     - zlib
-    - pcl
-    - hdf5
+    - pcl {{ pcl }}
+    - hdf5 {{ hdf5 }}
     - boost
-    - vtk
+    - vtk {{ vtk }}
     - tbb-devel
   run:
     - python
@@ -56,13 +58,13 @@ requirements:
     - {{ pin_compatible('laszip', max_pin='x.x') }}
     - {{ pin_compatible('pcl', max_pin='x.x') }}
     - {{ pin_compatible('hdf5', max_pin='x.x.x') }}
-    - libgdal
+    - libgdal {{ libgdal }}
     - geos
-    - geotiff
+    - geotiff {{ geotiff }}
     - curl
     - zlib
     - boost
-    - vtk
+    - vtk {{ vtk }}
     - tbb-devel
 
 test:
