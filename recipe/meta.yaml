@@ -10,9 +10,7 @@ source:
   url: https://github.com/PDAL/PDAL/archive/{{ version }}.tar.gz
   sha256: ef3a32c06865383feac46fd7eb7491f034cad6b0b246b3c917271ae0c8f25b69
   patches:
-    # - geos.patch
     - hdf5.patch
-    # - cchar.patch
 
 build:
     number: 0
